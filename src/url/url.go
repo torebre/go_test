@@ -16,6 +16,10 @@ func Parse(rawurl string) (*URL, error) {
 		return nil, errors.New("missing scheme")
 	}
 
-	scheme, host := rawurl[:i], rawurl[i+3:]
+	scheme, rest := rawurl[:i], rawurl[i+3:]
+	host := rest
+	if i := strings.Index(rest, "/"); i >= 0 {
+		host = rest[:i]
+	}
 	return &URL{scheme, host}, nil
 }

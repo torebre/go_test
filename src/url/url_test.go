@@ -3,7 +3,7 @@ package url
 import "testing"
 
 func TestParse(t *testing.T) {
-	const rawurl = "https://foo.com"
+	const rawurl = "https://foo.com/go"
 
 	u, err := Parse(rawurl)
 	if err != nil {
@@ -11,16 +11,13 @@ func TestParse(t *testing.T) {
 	}
 
 	want := "https"
-	got := u.Scheme
 
-	if got != want {
-		t.Logf("Parse(%q).Scheme err = %q, want %q", rawurl, got, want)
-		t.Fail()
+	if got := u.Scheme; got != want {
+		t.Errorf("Parse (%q).Scheme = %q; want %q", rawurl, got, want)
 	}
 
-
-	if got, want != u.Host, "foo.com"; got != want {
-		t.Errorf("Parse (%q).Host = %q; want %q", rawurl, got want)
+	if got, want := u.Host, "foo.com"; got != want {
+		t.Errorf("Parse(%q).Host = %q; want %q", rawurl, got, want)
 	}
 
 }
