@@ -21,3 +21,23 @@ func TestParse(t *testing.T) {
 	}
 
 }
+
+func TestURLPort(t *testing.T) {
+	tests := []struct {
+		name string
+		in   string
+		port string
+	}{
+		{name: "with port", in: "foo.com:80", port: "80"},
+		{name: "with empty port", in: "foo.com:", port: ""},
+		{name: "without port", in: "foo.com", port: ""},
+		{name: "ip with port", in: "1.2.3.4:90", port: "90"},
+		{name: "ip without port", in: "1.2.3.4", port: ""},
+	}
+	for _, tt := range tests {
+		u := &URL{Host: tt.in}
+		if got, want := u.Port(), tt.port; got != want {
+			t.Errorf("%s: for host %q; got %q; want %q", tt.name, tt.in, got, want)
+		}
+	}
+}

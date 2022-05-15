@@ -8,6 +8,7 @@ import (
 type URL struct {
 	Scheme string
 	Host   string
+	Path   string
 }
 
 func Parse(rawurl string) (*URL, error) {
@@ -17,9 +18,13 @@ func Parse(rawurl string) (*URL, error) {
 	}
 
 	scheme, rest := rawurl[:i], rawurl[i+3:]
-	host := rest
+	host, path := rest, ""
 	if i := strings.Index(rest, "/"); i >= 0 {
-		host = rest[:i]
+		host, path = rest[:i], rest[i+1:]
 	}
-	return &URL{scheme, host}, nil
+	return &URL{scheme, host, path}, nil
+}
+
+func (u *URL) Port() string {
+	return ""
 }
