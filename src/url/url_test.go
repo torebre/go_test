@@ -35,9 +35,11 @@ func TestURLPort(t *testing.T) {
 		{name: "ip without port", in: "1.2.3.4", port: ""},
 	}
 	for _, tt := range tests {
-		u := &URL{Host: tt.in}
-		if got, want := u.Port(), tt.port; got != want {
-			t.Errorf("%s: for host %q; got %q; want %q", tt.name, tt.in, got, want)
-		}
+		t.Run(tt.name, func(t *testing.T) {
+			u := &URL{Host: tt.in}
+			if got, want := u.Port(), tt.port; got != want {
+				t.Errorf("%s: for host %q; got %q; want %q", tt.name, tt.in, got, want)
+			}
+		})
 	}
 }

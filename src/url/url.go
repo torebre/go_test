@@ -26,5 +26,9 @@ func Parse(rawurl string) (*URL, error) {
 }
 
 func (u *URL) Port() string {
-	return ""
+	i := strings.Index(u.Host, ":")
+	if i < 0 {
+		return ""
+	}
+	return u.Host[i+1:]
 }
